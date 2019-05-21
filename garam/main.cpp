@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <Windows.h>
 #include "goods.h" // 구조체
+#include "payment.h"
+
+
+#pragma warning(disable:4996)
 
 
 #define SIZE 3
@@ -35,6 +39,7 @@ int main()
 		printf("2.출고\n");
 		printf("3.현황표시\n");
 		printf("4.종료\n");
+		printf("5 결제\n");
 		printf("=========\n");
 		printf("번호입력: ");
 		scanf("%d", &a);
@@ -44,6 +49,7 @@ int main()
 		else if (a == 2) unstore();
 		else if (a == 3) present_condition();
 		else if (a == 4) exit(0);
+		else if (a == 5) paymentSelect();
 		else printf("없는 번호입니다.\n");
 
 	}
