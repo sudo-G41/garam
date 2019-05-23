@@ -1,4 +1,2 @@
-﻿  main.cpp
-c:\garam\garam\main.cpp(114): warning C4477: 'fscanf' : 서식 문자열 '%f'에 'float *' 형식의 인수가 필요하지만 variadic 인수 5의 형식이 'int *'입니다.
-c:\garam\garam\main.cpp(127): warning C4477: 'fprintf' : 서식 문자열 '%f'에 'double' 형식의 인수가 필요하지만 variadic 인수 5의 형식이 'int'입니다.
+﻿  payment.cpp
   garam.vcxproj -> C:\garam\x64\Debug\garam.exe

@@ -2,3 +2,4 @@
 
 void paymentSelect(int);
 void cashChange(int);
+void cardPay();

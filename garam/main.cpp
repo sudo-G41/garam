@@ -58,11 +58,11 @@ int main()
 		else if (a == 2) unstore();
 		else if (a == 3) present_condition();
 		//else if (a == 4) Tmain(head);
-		//else if (a == 5) paymentSelect();
+		else if (a == 5) paymentSelect(20000);
 		else if (a == 0) exit(0);
 		else {
-			//system("cls");
-			printf("없는 번호입니다.\n");
+			system("cls");
+			printf("잘못된 입력입니다. 다시입력해주세요\n\n");
 			while (getchar() != '\n');
 		}
 	}
