@@ -5,24 +5,25 @@
 
 
 // 카드 선택
-void paymentSelect() {
-	int paySel = 0;
-
-	printf("현금결제 1, 카드결제 2\n");
-	scanf("%d", &paySel);
-
-	if (paySel == 1) {
-		printf("현금결제를 선택하였습니다\n ");
-		cashChange(10000);
-	}
-	else if (paySel == 2) printf("카드결제를 선택하였습니다\n");
-	else {
-		while (getchar() != '\n');
-		printf("다시 선택해주세요\n");
-		paymentSelect();
-	}
-	return;
-}
+//void paymentSelect(int cost) {
+//	int paySel = 0;
+//
+//	printf("총 가격:%d \n",cost);
+//	printf("현금결제 1, 카드결제 2\n");
+//	scanf("%d", &paySel);
+//
+//	if (paySel == 1) {
+//		printf("현금결제를 선택하였습니다\n ");
+//		cashChange(10000);
+//	}
+//	else if (paySel == 2) printf("카드결제를 선택하였습니다\n");
+//	else {
+//		while (getchar() != '\n');
+//		printf("다시 선택해주세요\n");
+//		paymentSelect(cost);
+//	}
+//	return;
+//}
 
 
 

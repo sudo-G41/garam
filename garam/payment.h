@@ -1,4 +1,4 @@
 #pragma once
 
-void paymentSelect();
+void paymentSelect(int);
 void cashChange(int);
