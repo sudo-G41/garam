@@ -27,6 +27,10 @@ int main()
 {
 	GOODS GN[SIZE];
 
+	for (int i = 0; i < TABLESIZE; i++) {
+		head[i] = createNode();
+	}//테이블 초기화
+
 	if ((fp = fopen("product.txt", "r")) == NULL) {
 		fp = fopen("product.txt", "w");
 		fclose(fp);
@@ -57,7 +61,7 @@ int main()
 		if (a == 1) warehouse();
 		else if (a == 2) unstore();
 		else if (a == 3) present_condition();
-		//else if (a == 4) Tmain(head);
+		else if (a == 4) Tmain(head);
 		else if (a == 5) paymentSelect(20000);
 		else if (a == 0) exit(0);
 		else {

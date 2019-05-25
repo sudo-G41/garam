@@ -123,7 +123,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="payment.cpp" />
-    <ClCompile Include="table.c" />
+    <ClCompile Include="table.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

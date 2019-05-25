@@ -32,7 +32,7 @@
     <ClCompile Include="payment.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="table.c">
+    <ClCompile Include="table.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
