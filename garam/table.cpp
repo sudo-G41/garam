@@ -1,4 +1,5 @@
 #include "table.h"
+#include "goods.h"
 #define TRUE 1
 #define FLASE 0
 #define TABLESIZE 10
@@ -17,6 +18,7 @@ HEAD* createNode() {
 	}
 	head->next = NULL;
 	head->length = 0;
+	head->pay = 0;
 	return head;
 }
 void printTable(HEAD *head[]) {
@@ -45,14 +47,43 @@ void printTable(HEAD *head[]) {
 void input(HEAD* head) {
 	NODE* tmp;
 	NODE* node = (NODE*)malloc(sizeof(NODE));
-	printf("상품명을 입력해 주세요 : ");
-	scanf("%s", node->gname);
-	printf("개수를 입력해 주세요 : ");
-	scanf("%d", &node->count);
-	if (node->count < 1) {
-		printf("잘못된 값입니다.\n");
+	FILE *fp;
+	GOODS list;
+	int get,count=0;
+
+	if ((fp = fopen("product.txt", "r")) == NULL) { printf("파일을 불러올 수 없습니다."); }
+	
+	printf("=================================================\n");
+	for(int i = 1; !feof(fp);i++) {
+		fscanf(fp, "%d %s %d %s %d \n", &list.gn, list.gname, &list.gstock, list.gcompany, &list.gprice);
+		printf("%d. %s\n", i,list.gname);
+		count++;
+	}
+	printf("=================================================\n");
+	fseek(fp, 0L, SEEK_SET);
+	printf("상품번호를 입력해 주세요 : ");
+	scanf("%d", &get);
+	if (get < 1 || count < get) {
+		printf("없는 상품입니다.\n");
+		free(node);
 		return;
 	}
+	for (int i = 0; i < get; i++) {
+		fscanf(fp, "%d %s %d %s %d \n", &list.gn, list.gname, &list.gstock, list.gcompany, &list.gprice);
+	}
+	strcpy(node->gname, list.gname);
+	printf("개수를 입력해 주세요 : ");
+	scanf("%d", &node->count);
+
+	fclose(fp);
+
+	if (node->count < 1) {
+		printf("잘못된 값입니다.\n");
+		free(node);
+		return;
+	}
+
+	head->pay += (list.gprice*node->count);
 	if (head->next == NULL) {
 		node->next = head->next;
 		head->next = node;
@@ -91,21 +122,32 @@ void tableList(HEAD* head) {
 void cancel(HEAD* head) {
 	NODE*tmp = head->next;
 	NODE*ptr;
+	GOODS list;
+
+	FILE *fp;
 	int i;
 	if (tmp == NULL) {
 		printf("비어있습니다.\n");
 		return;
 	}
-	tableList(head);
 	printf("몇 번째 물품을 취소하시겠습니까? ");
 	scanf("%d", &i);
-	if (0>i||i > head->length) {
+	
+	if (1>i||i > head->length) {
 		printf("없는 번호입니다.\n");
 		return;
 	}
+
+	if ((fp = fopen("product.txt", "r")) == NULL) { printf("파일을 불러올 수 없습니다."); }
+
 	if (i == 1) {
 		head->next = tmp->next;
 		head->length--;
+		while (!feof(fp)) {
+			fscanf(fp, "%d %s %d %s %d \n", &list.gn, list.gname, &list.gstock, list.gcompany, &list.gprice);
+			if (strcmp(list.gname, tmp->gname) == 0)break;
+		}
+		head->pay -= (list.gprice*tmp->count);
 		free(tmp);
 		return;
 	}
@@ -115,6 +157,11 @@ void cancel(HEAD* head) {
 	}
 	ptr->next = tmp->next;
 	head->length--;
+	while (!feof(fp)) {
+		fscanf(fp, "%d %s %d %s %d \n", &list.gn, list.gname, &list.gstock, list.gcompany, &list.gprice);
+		if (strcmp(list.gname, tmp->gname) == 0)break;
+	}
+	head->pay -= (list.gprice*tmp->count);
 	free(tmp);
 	return;
 }
@@ -129,24 +176,26 @@ void cancelAll(HEAD*head) {
 		free(ptr);
 	}
 	head->length = 0;
+	head->pay=0;
 }
 
 void Tmain(HEAD*head[]) {
 	int num,Tnum;
 
+	printTable(head);
+
 	printf("=============\n");
-	printf("1.테이블 확인\n");
-	printf("2.테이블 선택\n");
-	printf("3.종료\n");
+	printf("1.테이블 선택\n");
+	printf("2.나가기\n");
 	printf("=============\n");
 	printf("번호입력: ");
 	scanf("%d", &num);
 	printf("\n");
-	if (num == 1)printTable(head);
-	else if (num == 2) {
+	if (num == 1) {
 		printf("몇번 테이블? : ");
 		scanf("%d", &Tnum);
 		while (true) {
+			printf("%d번 테이블\n", Tnum);
 			tableList(head[Tnum - 1]);
 			printf("==========\n");
 			printf("1.주문\n");
@@ -160,6 +209,8 @@ void Tmain(HEAD*head[]) {
 			else if (num == 2)cancel(head[Tnum - 1]);
 			else if (num == 3)cancelAll(head[Tnum - 1]);
 			else if (num == 4)break;
+			//else if (num == 5)printf("%d원\n", head[Tnum - 1]->pay);
 		}
 	}
+	else if (num == 2) { return; }
 }
