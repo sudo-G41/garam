@@ -51,7 +51,7 @@ int main()
 		printf("2.출고\n");
 		printf("3.현황표시\n");
 		printf("4.테이블선택\n");
-		printf("5 결제\n");
+		//printf("5 결제\n");
 		printf("0.종료\n");
 		printf("=========\n");
 		printf("번호입력: ");
@@ -62,7 +62,7 @@ int main()
 		else if (a == 2) unstore();
 		else if (a == 3) present_condition();
 		else if (a == 4) Tmain(head);
-		else if (a == 5) paymentSelect(20000);
+		//else if (a == 5) paymentSelect(head);
 		else if (a == 0) exit(0);
 		else {
 			system("cls");

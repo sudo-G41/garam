@@ -1,5 +1,7 @@
 #pragma once
 
-void paymentSelect(int);
+#include "table.h"
+
+void paymentSelect(HEAD*head);
 void cashChange(int);
 void cardPay();

@@ -1,13 +1,20 @@
 #include <stdio.h>
 #include <Windows.h>
 #include "payment.h"
+#include "table.h"
 
 #pragma warning(disable:4996)
 
 
 // 결제 선택
-void paymentSelect(int cost) {
+void paymentSelect(HEAD*head) {
+
+	
+	int cost=0;
 	int paySel = 0;
+	
+	cost = head->pay;
+
 
 	printf("총 가격:%d \n",cost);
 	printf("=========\n");
@@ -30,7 +37,7 @@ void paymentSelect(int cost) {
 	else {
 		while (getchar() != '\n');
 		printf("다시 선택해주세요\n");
-		paymentSelect(cost);
+		paymentSelect(head);
 	}
 	return;
 }

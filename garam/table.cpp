@@ -1,5 +1,6 @@
 #include "table.h"
 #include "goods.h"
+#include "payment.h"
 #define TRUE 1
 #define FLASE 0
 #define TABLESIZE 10
@@ -201,14 +202,16 @@ void Tmain(HEAD*head[]) {
 			printf("1.주문\n");
 			printf("2.주문취소\n");
 			printf("3.전체취소\n");
-			printf("4.나가기\n");
+			printf("4 결제\n");
+			printf("5.나가기\n");
 			printf("==========\n");
 			printf("번호입력: ");
 			scanf("%d", &num);
 			if(num==1)input(head[Tnum - 1]);
 			else if (num == 2)cancel(head[Tnum - 1]);
 			else if (num == 3)cancelAll(head[Tnum - 1]);
-			else if (num == 4)break;
+			else if (num == 4)paymentSelect(head[Tnum -1]);
+			else if (num == 5)break;
 			//else if (num == 5)printf("%d원\n", head[Tnum - 1]->pay);
 		}
 	}
