@@ -33,12 +33,15 @@ void paymentSelect(HEAD*head) {
 		printf("카드결제를 선택하였습니다\n");
 		cardPay();
 	}
-	else if (paySel == 0) exit(0);
+	else if (paySel == 0) {
+		system("cls");
+	}
 	else {
 		while (getchar() != '\n');
 		printf("다시 선택해주세요\n");
 		paymentSelect(head);
 	}
+	cancelAll(head);
 	return;
 }
 

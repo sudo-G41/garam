@@ -156,22 +156,25 @@ void unstore()
 
 void present_condition()
 {
-	GOODS G3[SIZE];
+	GOODS G3;
 
 	if ((fp = fopen("product.txt", "r")) == NULL) {
 		printf("파일 열기 오류...\n");
 		exit(-1);
 	}
 	printf("\n\n");
-	for (int i = 0; i < n; i++) {
-		fscanf(fp, "%d %s %d %s %d \n", &G3[i].gn, /*&G3[i].gnumber,*/ G3[i].gname, &G3[i].gstock, G3[i].gcompany, &G3[i].gprice);
-		printf("%3d번째   ", G3[i].gn);
-		//printf("물품번호: %d\t", G3[i].gnumber);
-		printf("물품이름: %-10s\t", G3[i].gname);
-		printf("물품가격: %d원\t", G3[i].gprice);
-		printf("재고수량: %5d개   ", G3[i].gstock);
-		printf("생산회사: %s\n", G3[i].gcompany);
+
+	
+	while (!feof(fp)) {
+		fscanf(fp, "%d %s %d %s %d \n", &G3.gn, /*&G3[i].gnumber,*/ G3.gname, &G3.gstock, G3.gcompany, &G3.gprice);
+		printf("%3d번째   ", G3.gn);
+		//printf("물품번호: %d\t", G3.gnumber);
+		printf("물품이름: %-10s\t", G3.gname);
+		printf("물품가격: %d원\t", G3.gprice);
+		printf("재고수량: %5d개   ", G3.gstock);
+		printf("생산회사: %s\n", G3 .gcompany);
 	}
+
 	printf("\n\n");
 	fclose(fp);
 }
