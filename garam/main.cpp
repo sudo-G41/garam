@@ -37,7 +37,7 @@ int main()
 	}
 
 	for (int i = 0; i < SIZE; i++) {
-		fscanf(fp, "%d %s %d %s %d \n", &GN[i].gn, /*&GN[i].gnumber,*/ GN[i].gname, &GN[i].gstock, GN[i].gcompany, &GN[i].gprice);
+		fscanf(fp, "%d %s %d \n", &GN[i].gn, GN[i].gname, &GN[i].gprice);
 		if (i != GN[i].gn - 1) {
 			n = i;
 			break;
@@ -73,7 +73,7 @@ int main()
 }
 
 void warehouse() {
-	GOODS G1[SIZE];
+	GOODS G1;
 
 	if ((fp = fopen("product.txt", "a")) == NULL) {
 		printf("파일 열기 오류...\n");
@@ -83,14 +83,19 @@ void warehouse() {
 	while (1) {
 		printf("%d번째 물품 \n", n + 1);
 		//printf("물품번호: "); scanf("%d", &G1[n].gn);
-		G1[n].gn = n;
-		if (G1[n].gn >= 0) {
-			printf("물품이름: ");   scanf("%s", G1[n].gname);
-			printf("물품가격: ");   scanf("%d", &G1[n].gprice);
-			printf("재고수량: ");   scanf("%d", &G1[n].gstock);
-			printf("생산회사: ");   scanf("%s", G1[n].gcompany);
+		G1.gn = n;
+		if (G1.gn >= 0) {
+			printf("물품이름: ");   scanf("%s", G1.gname);
+			printf("물품가격: ");   scanf("%d", &G1.gprice);
 
-			fprintf(fp, " %d %s %d %s %d\n", n + 1,/* G1[n].gnumber,*/ G1[n].gname, G1[n].gstock, G1[n].gcompany, G1[n].gprice);
+			if (G1.gprice < 0) {
+				printf("물품가격이 잘못 입력되었습니다. 다시 입력해주세요.\n\n");
+				continue;
+			}
+
+			fprintf(fp, " %d %s %d\n", n + 1,/* G1[n].gnumber,*/ G1.gname, G1.gprice);
+
+
 			printf("\n\n☆물품정보 저장완료☆\n\n");
 			n = n + 1;
 			break;
@@ -115,7 +120,7 @@ void unstore()
 		exit(-1);
 	}
 	for (int i = 0; i < n; i++) {
-		fscanf(fp, "%d %s %d %s %f.000000 \n", &G2[i].gn, /*&G2[i].gnumber,*/ G2[i].gname, &G2[i].gstock, G2[i].gcompany, &G2[i].gprice);
+		fscanf(fp, "%d %s %d \n", &G2[i].gn, G2[i].gname,&G2[i].gprice);
 	}
 	fclose(fp);
 
@@ -128,7 +133,7 @@ void unstore()
 				exit(-1);
 			}
 			for (int i = 0; i < n; i++) {
-				fprintf(fp, " %d %s %d %s %f\n", i + 1,/* G2[i].gnumber,*/ G2[i].gname, G2[i].gstock, G2[i].gcompany, G2[i].gprice);
+				fprintf(fp, " %d %s %d %f\n", i + 1, G2[i].gname, G2[i].gprice);
 			}
 			printf("\n\n☆물품정보 저장완료☆\n\n");
 			fclose(fp);
@@ -137,16 +142,10 @@ void unstore()
 		else
 			for (int i = 0; i < n; i++) {
 				if (G2[i].gn == a) {
-					printf("\n※현재고수량: %d\n\n", G2[i].gstock);
 					while (1) {
 						printf("출고수량 입력: ");
 						scanf("%d", &gnum2);
-						if (gnum2 < G2[i].gstock) {
-							G2[i].gstock = G2[i].gstock - gnum2;
-							printf("\n※재고수량: %d -> %d\n", G2[i].gstock + gnum2, G2[i].gstock);
-							break;
-						}
-						printf("\n입력오류! -> 출고수량이 재고수량보다 큽니다. (현재고수량 -> %d)\n\n", G2[i].gstock);
+			
 					}
 					break;
 				}
@@ -166,13 +165,10 @@ void present_condition()
 
 	
 	while (!feof(fp)) {
-		fscanf(fp, "%d %s %d %s %d \n", &G3.gn, /*&G3[i].gnumber,*/ G3.gname, &G3.gstock, G3.gcompany, &G3.gprice);
+		fscanf(fp, "%d %s %d \n", &G3.gn, G3.gname, &G3.gprice);
 		printf("%3d번째   ", G3.gn);
-		//printf("물품번호: %d\t", G3.gnumber);
 		printf("물품이름: %-10s\t", G3.gname);
 		printf("물품가격: %d원\t", G3.gprice);
-		printf("재고수량: %5d개   ", G3.gstock);
-		printf("생산회사: %s\n", G3 .gcompany);
 	}
 
 	printf("\n\n");

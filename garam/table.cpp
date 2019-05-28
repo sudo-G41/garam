@@ -56,7 +56,7 @@ void input(HEAD* head) {
 	
 	printf("=================================================\n");
 	for(int i = 1; !feof(fp);i++) {
-		fscanf(fp, "%d %s %d %s %d \n", &list.gn, list.gname, &list.gstock, list.gcompany, &list.gprice);
+		fscanf(fp, "%d %s %d \n", &list.gn, list.gname, &list.gprice);
 		printf("%d. %s\n", i,list.gname);
 		count++;
 	}
@@ -70,7 +70,7 @@ void input(HEAD* head) {
 		return;
 	}
 	for (int i = 0; i < get; i++) {
-		fscanf(fp, "%d %s %d %s %d \n", &list.gn, list.gname, &list.gstock, list.gcompany, &list.gprice);
+		fscanf(fp, "%d %s %d \n", &list.gn, list.gname, &list.gprice);
 	}
 	strcpy(node->gname, list.gname);
 	printf("개수를 입력해 주세요 : ");
@@ -145,7 +145,7 @@ void cancel(HEAD* head) {
 		head->next = tmp->next;
 		head->length--;
 		while (!feof(fp)) {
-			fscanf(fp, "%d %s %d %s %d \n", &list.gn, list.gname, &list.gstock, list.gcompany, &list.gprice);
+			fscanf(fp, "%d %s %d \n", &list.gn, list.gname, &list.gprice);
 			if (strcmp(list.gname, tmp->gname) == 0)break;
 		}
 		head->pay -= (list.gprice*tmp->count);
@@ -159,7 +159,7 @@ void cancel(HEAD* head) {
 	ptr->next = tmp->next;
 	head->length--;
 	while (!feof(fp)) {
-		fscanf(fp, "%d %s %d %s %d \n", &list.gn, list.gname, &list.gstock, list.gcompany, &list.gprice);
+		fscanf(fp, "%d %s %d \n", &list.gn, list.gname, &list.gprice);
 		if (strcmp(list.gname, tmp->gname) == 0)break;
 	}
 	head->pay -= (list.gprice*tmp->count);
@@ -181,7 +181,7 @@ void cancelAll(HEAD*head) {
 }
 
 void Tmain(HEAD*head[]) {
-	int num,Tnum;
+	int num,Tnum,numM;
 
 	printTable(head);
 
@@ -191,29 +191,50 @@ void Tmain(HEAD*head[]) {
 	printf("=============\n");
 	printf("번호입력: ");
 	scanf("%d", &num);
-	printf("\n");
-	if (num == 1) {
-		printf("몇번 테이블? : ");
-		scanf("%d", &Tnum);
-		while (true) {
-			printf("%d번 테이블\n", Tnum);
-			tableList(head[Tnum - 1]);
-			printf("==========\n");
-			printf("1.주문\n");
-			printf("2.주문취소\n");
-			printf("3.전체취소\n");
-			printf("4 결제\n");
-			printf("5.나가기\n");
-			printf("==========\n");
-			printf("번호입력: ");
-			scanf("%d", &num);
-			if(num==1)input(head[Tnum - 1]);
-			else if (num == 2)cancel(head[Tnum - 1]);
-			else if (num == 3)cancelAll(head[Tnum - 1]);
-			else if (num == 4)paymentSelect(head[Tnum -1]);
-			else if (num == 5)break;
-			//else if (num == 5)printf("%d원\n", head[Tnum - 1]->pay);
-		}
+
+	if (num < 0 || num > 2) {
+		printf("다시 입력해주세요.\n\n");
+		while (getchar() != '\n');
+
+		return;
 	}
-	else if (num == 2) { return; }
+
+		printf("\n");
+		if (num == 1) {
+			printf("몇번 테이블? : ");
+			scanf("%d", &Tnum);
+			if (Tnum < 0 || Tnum > 10) {
+				printf("없는 테이블입니다. 다시 입력해주세요.\n\n");
+				while (getchar() != '\n');
+				return;
+			}
+
+			while (true) {
+				printf("%d번 테이블\n", Tnum);
+				tableList(head[Tnum - 1]);
+				printf("==========\n");
+				printf("1.주문\n");
+				printf("2.주문취소\n");
+				printf("3.전체취소\n");
+				printf("4 결제\n");
+				printf("5.나가기\n");
+				printf("==========\n");
+				printf("번호입력: ");
+				numM = -1;
+				scanf("%d", &numM);
+				if (numM < 0 || numM > 5) {
+					printf("다시 입력해주세요.\n\n");
+					while (getchar() != '\n');
+
+					return;
+				}
+				if (numM == 1)input(head[Tnum - 1]);
+				else if (numM == 2)cancel(head[Tnum - 1]);
+				else if (numM == 3)cancelAll(head[Tnum - 1]);
+				else if (numM == 4)paymentSelect(head[Tnum - 1]);
+				else if (numM == 5)break;
+			}
+		}
+		else if (num == 2) { return; }
+
 }

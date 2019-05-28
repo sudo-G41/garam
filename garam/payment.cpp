@@ -7,11 +7,15 @@
 
 
 // 결제 선택
-void paymentSelect(HEAD*head) {
+void paymentSelect(HEAD* head) {
 
-	
+	if (head->next == NULL) {
+		printf("주문이 없습니다.\n");
+		return;
+	}
 	int cost=0;
-	int paySel = 0;
+	int paySel;
+	int check;
 	
 	cost = head->pay;
 
@@ -22,12 +26,20 @@ void paymentSelect(HEAD*head) {
 	printf("2.카드결제\n");
 	printf("0.종료\n");
 	printf("=========\n");
+	printf("번호입력 :_\b");
 	scanf("%d", &paySel);
+
+	if (paySel < 0 || paySel > 2) {
+		printf("다시 입력해주세요.\n\n");
+		while (getchar() != '\n');
+
+		return;
+	}
 
 	if (paySel == 1) {
 		system("cls");
 		printf("현금결제를 선택하였습니다.\n총 가격: %d\n ",cost);
-		cashChange(cost);
+		check =cashChange(cost);
 	}
 	else if (paySel == 2) {
 		printf("카드결제를 선택하였습니다\n");
@@ -41,21 +53,30 @@ void paymentSelect(HEAD*head) {
 		printf("다시 선택해주세요\n");
 		paymentSelect(head);
 	}
-	cancelAll(head);
+
+	if(check = TRUE) cancelAll(head);
 	return;
 }
 
 
 
 // 현금 결제 거스름 돈
-void cashChange(int cost) {
+int cashChange(int cost) {
 	int change = 0;
-	int cash = 0;
+	int cash ;
 	static int costRemain = 0;
 	costRemain = cost;
 
 	printf("\n받은 금액: ");
 	scanf("%d", &cash);
+
+	if (cash < 0 ) {
+		printf("다시 입력해주세요.\n\n");
+		while (getchar() != '\n');
+
+		return FALSE;
+	}
+
 
 
 	if (costRemain < cash) {
@@ -68,6 +89,7 @@ void cashChange(int cost) {
 		printf("남은 금액: %d\n", costRemain);
 		cashChange(costRemain);
 	}
+	return TRUE;
 
 }
 
