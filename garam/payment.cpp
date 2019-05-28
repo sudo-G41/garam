@@ -54,7 +54,7 @@ void paymentSelect(HEAD* head) {
 		paymentSelect(head);
 	}
 
-	if(check = TRUE) cancelAll(head);
+	if(check == TRUE) cancelAll(head);
 	return;
 }
 
