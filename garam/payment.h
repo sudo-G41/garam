@@ -3,5 +3,5 @@
 #include "table.h"
 
 void paymentSelect(HEAD*head);
-int cashChange(int);
+int cashChange(int, HEAD*head);
 void cardPay();

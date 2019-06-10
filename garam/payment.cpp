@@ -39,7 +39,7 @@ void paymentSelect(HEAD* head) {
 	if (paySel == 1) {
 		system("cls");
 		printf("현금결제를 선택하였습니다.\n총 가격: %d\n ",cost);
-		check =cashChange(cost);
+		check = cashChange(cost, head);
 	}
 	else if (paySel == 2) {
 		printf("카드결제를 선택하였습니다\n");
@@ -61,7 +61,7 @@ void paymentSelect(HEAD* head) {
 
 
 // 현금 결제 거스름 돈
-int cashChange(int cost) {
+int cashChange(int cost, HEAD* head) {
 	int change = 0;
 	int cash ;
 	static int costRemain = 0;
@@ -86,8 +86,9 @@ int cashChange(int cost) {
 	else if (costRemain == cash) printf("\n결제 완료\n\n");
 	else if (costRemain > cash) {
 		costRemain = costRemain - cash;
+		head->pay = costRemain;
 		printf("남은 금액: %d\n", costRemain);
-		cashChange(costRemain);
+		return FALSE;
 	}
 	return TRUE;
 
